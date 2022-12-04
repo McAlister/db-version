@@ -1,0 +1,27 @@
+
+services:
+ 
+  db:
+    image: postgres:14.5
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: local
+      POSTGRES_PASSWORD: local
+      POSTGRES_DB: version-test
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./pgData:/var/lib/postgresql/data/pgdata
+
+  # Docker networking means adminer sees postgres on the host, "db", not "localhost"
+  # From your host machine you see it on localhost. but in adminer type "db" instead.
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  pgdata:
+ 
